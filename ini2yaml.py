@@ -1,7 +1,8 @@
-from ansible.parsing.dataloader import DataLoader
-from ansible.inventory.manager import InventoryManager
-import yaml
 import sys
+
+import yaml
+from ansible.inventory.manager import InventoryManager
+from ansible.parsing.dataloader import DataLoader
 
 IGNORABLE_VARS = ["inventory_file", "inventory_dir"]
 output = {"all": {"children": {}}}
