@@ -1,13 +1,11 @@
 from ansible.parsing.dataloader import DataLoader
 from ansible.inventory.manager import InventoryManager
 import yaml
+import sys
 
-INVENTORY = '/home/davi/repos/leanon-devops/enonic-project-inventories/arim.ini'
 IGNORABLE_VARS = ['inventory_file', 'inventory_dir']
 output = {'all':{'children': {}}}
 
-loader = DataLoader()
-inventory = InventoryManager(loader=loader, sources=INVENTORY)
 
 
 def parse_host(host):
@@ -38,11 +36,21 @@ def parse_group(group):
 
     return group_dict
 
+
+if len(sys.argv) > 1:
+    inventory_path = sys.argv[1]
+else:
+    print("Missing inventory.ini path")
+    exit(1)
+
+
+loader = DataLoader()
+inventory = InventoryManager(loader=loader, sources=inventory_path)
+
 for group_name, group in inventory.groups.items():
     if group_name == 'all':
         output[group_name].update(parse_group(group))
     else:
         output['all']['children'][group_name] = parse_group(group)
-    
 
 print(yaml.dump(output, sort_keys=False))
