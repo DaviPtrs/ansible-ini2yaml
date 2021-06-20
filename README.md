@@ -30,6 +30,11 @@ all:
       hosts:
         review:
           ansible_host: host
+          enonic_vhost_domain: review.enonic.host
+          enonic_port: 8080
+          ssl: 'true'
+        master:
+          ansible_host: host
           enonic_vhost_domain: master.enonic.host
           enonic_port: 8081
           ssl: 'true'
