@@ -25,27 +25,27 @@ all:
           ansible_host: host
           prototype_vhost_domain: prototype.app.host
           prototype_port: 8080
-          ssl: 'true'
+          ssl: true
     enonic:
       hosts:
         review:
           ansible_host: host
           enonic_vhost_domain: review.enonic.host
           enonic_port: 8080
-          ssl: 'true'
+          ssl: true
         master:
           ansible_host: host
           enonic_vhost_domain: master.enonic.host
           enonic_port: 8081
-          ssl: 'true'
+          ssl: true
       vars:
-        enonic_ci: 'true'
+        enonic_ci: true
         enonic_ci_version: 7.6
-        npm_install: 'false'
-        gulp: 'true'
+        npm_install: false
+        gulp: true
         gulp_arguments: build
-        minio: 'true'
-        gdrive: 'true'
+        minio: true
+        gdrive: true
     local:
       hosts:
         localhost:
@@ -62,18 +62,18 @@ all:
     project_app_name: com.app.test
     project_path: output
     project_gdrive_name: TEST
-    enonic: 'true'
-    enonic_xp_folder: 'true'
+    enonic: true
+    enonic_xp_folder: true
     enonic_version: 7.5.0
-    enonic_smtp: 'true'
+    enonic_smtp: true
     enonic_environment: prod
     enonic_jar_path: jars
-    sonarqube: 'false'
+    sonarqube: false
     sonarqube_url: http://sonarqube.link
     sonarqube_project_key: sonarqube:key
     sonarqube_token: <sonarqube-token>
     sonarqube_branch: master
-    prototype: 'false'
+    prototype: false
     prototype_php_version: 7.2
 ```
 

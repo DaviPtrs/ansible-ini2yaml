@@ -1,4 +1,5 @@
 import sys
+from distutils.util import strtobool
 
 import yaml
 from ansible.inventory.manager import InventoryManager
@@ -6,6 +7,15 @@ from ansible.parsing.dataloader import DataLoader
 
 IGNORABLE_VARS = ["inventory_file", "inventory_dir"]
 output = {"all": {"children": {}}}
+
+
+def convert_if_bool(obj):
+    if type(obj) != str:
+        return obj
+    try:
+        return bool(strtobool(obj))
+    except ValueError:
+        return obj
 
 
 def parse_host(host):
@@ -16,6 +26,7 @@ def parse_host(host):
                 vars_dict[var_name] = var
         elif var != inventory.localhost.vars.get(var_name):
             vars_dict[var_name] = var
+    vars_dict.update({k: convert_if_bool(v) for k, v in vars_dict.items()})
     host_dict = {host.name: vars_dict}
     return host_dict
 
@@ -29,7 +40,9 @@ def parse_group(group):
             group_dict["hosts"].update(parsed_host)
     if len(group.vars) > 0:
         group_dict["vars"] = {}
-        group_dict["vars"].update(group.serialize()["vars"])
+        vars_dict = group.serialize()["vars"]
+        vars_dict.update({k: convert_if_bool(v) for k, v in vars_dict.items()})
+        group_dict["vars"].update(vars_dict)
 
     return group_dict
 
