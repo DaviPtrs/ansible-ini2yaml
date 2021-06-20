@@ -21,12 +21,9 @@ def parse_host(host):
 
 def parse_group(group):
     group_dict = {}
-    # print(f"\n\n\nGroup: {group.name}")
     if len(group.hosts) > 0:
         group_dict["hosts"] = {}
         for host in group.hosts:
-            # print("\n\n")
-            # print(host.serialize())
             parsed_host = parse_host(host)
             group_dict["hosts"].update(parsed_host)
     if len(group.vars) > 0:
